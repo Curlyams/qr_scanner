@@ -3,11 +3,12 @@ import pandas as pd
 from credentials.credential import username, password, server, database
 from util.sqlclass import SQLHandler
 from util.datafunctions import *
-
+from datetime import datetime
 class DataScanner:
 
-    def __init__(self, server, database, username, password):
-        self.sql_handler = SQLHandler(server=server, database=database, username=username, password=password)
+    def __init__(self, server, database, username, password, connection_string,dsn):
+        self.sql_handler = SQLHandler(server=server, database=database, username=username, password=password, 
+                                      connection_string=connection_string,dsn = dsn)
         
     def scan_data(self,upload_time):
         while True:
@@ -32,7 +33,7 @@ class DataScanner:
         missing_columns = set(['Clinic', 'Area', 'Member_ID', 'Date_Time_Of_Scan']) - set(df.columns)
         for col in missing_columns:
             df[col] = 'error in cols'
-        df['Date_Time_Of_Scan'] = int(time.time())
+        df['Date_Time_Of_Scan'] = datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
         table_name = 'Member_Scans'
         column_names = df.columns.tolist()
         column_types = ['VARCHAR(255)' for _ in range(len(column_names))]

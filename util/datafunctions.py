@@ -10,7 +10,8 @@ def clean_data(data_list):
         try:
             split_data = re.split(regex_pattern, data)
             if len(split_data) >= 4:
-                split_data[3:5] = [' '.join(split_data[3:5])]
+                # Keep only the first 4 items in split_data
+                split_data = split_data[:4]
                 scan_clean.append(split_data)
             else:
                 missing_cols = 4 - len(split_data)

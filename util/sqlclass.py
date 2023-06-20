@@ -2,18 +2,21 @@ import pypyodbc as odbc
 
 
 class SQLHandler:
-    def __init__(self, server, database, username, password):
+    def __init__(self, server, database, username, password, connection_string,dsn = None):
         self.server = server
         self.database = database
         self.username = username
         self.password = password
+        self.connection_string = connection_string
         self.connection = None
         self.cursor = None
+        self.dsn = dsn
+        
 
     def connect(self):
         try:
-            connection_string = f"Driver={{ODBC Driver 18 for SQL Server}};Server=tcp:{self.server},1433;Database={self.database};Uid={self.username};Pwd={self.password};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-            self.connection = odbc.connect(connection_string)
+            #connection_string = f"Driver={{ODBC Driver 18 for SQL Server}};Server=tcp:{self.server},1433;Database={self.database};Uid={self.username};Pwd={self.password};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+            self.connection = odbc.connect(self.connection_string)
             self.cursor = self.connection.cursor()
             print("Connection established successfully")
         except Exception as e:

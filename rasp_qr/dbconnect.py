@@ -1,9 +1,9 @@
 import pandas as pd
-from credential import username, password, server, database
+from credentials.credential import username, password, server, database
 from sqlclass import SQLHandler
 import scanclean
 
-sql_handler = SQLHandler(server=server, database=database, username=username, password=password)
+sql_handler = SQLHandler(server=server, database=database, username=username, password=password,)
 sql_handler.connect()
 
 raw_data_list = []

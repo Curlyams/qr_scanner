@@ -1,8 +1,8 @@
 import time
 import pandas as pd
-from credential import username, password, server, database
+from credentials.credential import username, password, server, database
 from util.sqlclass import SQLHandler
-import scanclean
+from util.datafunctions import *
 
 
 sql_handler = SQLHandler(server=server, database=database, username=username, password=password)
@@ -17,7 +17,7 @@ while True:
             break
         raw_data_list.append(data)
     
-    data_list = scanclean.clean_data(raw_data_list)
+    data_list = clean_data(raw_data_list)
 
     if data_list:
         
